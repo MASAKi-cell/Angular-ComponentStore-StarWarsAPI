@@ -9,7 +9,7 @@ import { Person } from '../models/person';
 @Injectable({
   providedIn: 'root',
 })
-export class StarsWarsService {
+export class StarsWarsWebService {
 
   constructor(private http: HttpClient) {}
 
