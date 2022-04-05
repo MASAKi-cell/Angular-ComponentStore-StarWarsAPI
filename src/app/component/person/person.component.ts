@@ -1,13 +1,13 @@
 import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
 import { PersonStore } from 'src/app/store/person.store';
 import { StarsWarsWebService } from 'src/app/service/star-wars.web-service';
-import { Person } from '../models/person';
+import { Person } from 'src/app/models/person';
 import { first, takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: 'component-store-person-container',
-  templateUrl: './person-container.component.html',
-  styleUrls: ['./person-container.component.scss'],
+  selector: 'component-store-person',
+  templateUrl: './person.component.html',
+  styleUrls: ['./person.component.scss'],
   providers: [PersonStore],
 })
 export class PersonComponent implements OnInit, OnDestroy{
