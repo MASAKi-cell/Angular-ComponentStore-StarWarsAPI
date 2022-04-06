@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Response } from '../models/response';
 import { Person } from '../models/person';
@@ -21,7 +21,26 @@ export class StarsWarsWebService {
     return this.http.get<Response>(`${environment.API_ROOT}/people`).pipe(
       map((response) => {
         return response.results;
-      })
-    );
+      }),
+      catchError(this.handleError<Person[]>(`getPerson`, []))
+    )
   }
+
+  /**
+   * エラーハンドリング（失敗したHTTP操作を処理する。）
+   * @param operation 
+   * @param result 
+   * @returns 
+   */
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+
+      // consoleに出力
+      console.error(error);
+  
+      // 空の結果を返して、アプリを持続可能にする
+      return of(result as T);
+    }
+  }
+
 }
