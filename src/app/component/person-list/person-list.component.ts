@@ -1,5 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { first } from 'rxjs/operators';
+import { Person } from 'src/app/models/person';
 import { PersonStore } from 'src/app/store/person.store';
+
 
 @Component({
   selector: 'component-store-person-list',
@@ -9,11 +12,9 @@ import { PersonStore } from 'src/app/store/person.store';
 })
 export class personListComponent {
 
-  constructor(private personStore: PersonStore) {}
+  people$!: Person[];
 
   // Person情報をStoreから呼び出しViewにに表示する。
-  people$ = this.personStore.peaple$;
-
   displayedColumns = [
     'name',
     'birth_year',
@@ -23,5 +24,14 @@ export class personListComponent {
     'height',
     'mass',
   ];
+  
+  constructor(private personStore: PersonStore) {}
+
+  ngOnInit(): void{
+    this.personStore.peaple$.pipe(first()).subscribe((res) => {
+      console.log(res);
+      this.people$ = res;
+    })
+  }
 
 }
