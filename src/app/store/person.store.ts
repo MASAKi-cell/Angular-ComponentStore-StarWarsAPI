@@ -4,12 +4,12 @@ import { Observable } from 'rxjs';
 import { Person } from 'src/app/models/person';
 
 export interface PersonState {
-  peaple: Person[];
+  people: Person[];
 }
 
-// Storeの初期値
+// Storeの初期値を設定する。
 const defaultState: PersonState = {
-  peaple: [],
+  people: [],
 };
 
 @Injectable()
@@ -19,10 +19,10 @@ export class PersonStore extends ComponentStore<PersonState> {
     super(defaultState);
   }
 
-  // 現在のStoreの値を選択する。
-  readonly peaple$: Observable<Person[]> = this.select(({peaple}) => peaple);
+  // 現在のPersonの値をtoreから取得する。
+  readonly people$: Observable<Person[]> = this.select(({ people }) => people);
 
-  // Storeの値をアップデートする。
+  // Personの値をアップデートする。
   readonly loadPeople = this.updater((state, people: Person[] | null) => ({
     ...state,
     people: people || [],

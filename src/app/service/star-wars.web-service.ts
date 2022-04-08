@@ -14,14 +14,12 @@ export class StarsWarsWebService {
   constructor(private http: HttpClient) {}
 
   /**
-   * Person情報を取得する。
+   * Person情報をStarWarsAPIから取得する。
    * @returns Person[]
    */
   getPeople(): Observable<Person[]> {
     return this.http.get<Response>(`${environment.API_ROOT}/people`).pipe(
-      map((response) => {
-        return response.results;
-      }),
+      map((response) => response.results),
       catchError(this.handleError<Person[]>(`getPerson`, []))
     )
   }

@@ -1,8 +1,14 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { first } from 'rxjs/operators';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import { Observable } from 'rxjs';
+import { first, takeUntil } from 'rxjs/operators';
 import { Person } from 'src/app/models/person';
 import { PersonStore } from 'src/app/store/person.store';
-
 
 @Component({
   selector: 'component-store-person-list',
@@ -10,9 +16,12 @@ import { PersonStore } from 'src/app/store/person.store';
   styleUrls: ['./person-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class personListComponent {
+export class personListComponent implements OnInit, OnDestroy {
+  
+  protected readonly onDestroy$ = new EventEmitter();
 
-  people$!: Person[];
+  // Storeから現在のPerson情報を取得して、Viewに表示させる。
+  people$ = this.personStore.people$;
 
   // Person情報をStoreから呼び出しViewにに表示する。
   displayedColumns = [
@@ -24,14 +33,18 @@ export class personListComponent {
     'height',
     'mass',
   ];
-  
+
   constructor(private personStore: PersonStore) {}
 
-  ngOnInit(): void{
-    this.personStore.peaple$.pipe(first()).subscribe((res) => {
-      console.log(res);
-      this.people$ = res;
-    })
+  ngOnDestroy(): void {
+    this.onDestroy$.emit();
   }
 
+  ngOnInit(): void {
+    // this.personStore.people$
+      // .pipe(first(), takeUntil(this.onDestroy$))
+      // .subscribe((res) => {
+        // return (this.people$ = res);
+      // });
+  }
 }
