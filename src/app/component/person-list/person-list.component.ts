@@ -5,9 +5,6 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { Observable } from 'rxjs';
-import { first, takeUntil } from 'rxjs/operators';
-import { Person } from 'src/app/models/person';
 import { PersonStore } from 'src/app/store/person.store';
 
 @Component({
@@ -41,10 +38,6 @@ export class personListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // this.personStore.people$
-      // .pipe(first(), takeUntil(this.onDestroy$))
-      // .subscribe((res) => {
-        // return (this.people$ = res);
-      // });
   }
+
 }
