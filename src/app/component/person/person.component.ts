@@ -1,9 +1,12 @@
 import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
-import { PersonStore } from 'src/app/store/person.store';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { first } from 'rxjs/operators';
 import { StarsWarsWebService } from 'src/app/service/star-wars.web-service';
+import { PersonStore } from 'src/app/store/person.store';
 import { Person } from 'src/app/models/person';
-import { first, takeUntil } from 'rxjs/operators';
 
+
+@UntilDestroy()
 @Component({
   selector: 'component-store-person',
   templateUrl: './person.component.html',
@@ -25,7 +28,7 @@ export class PersonComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // serviceを使用して、StoreからPerson情報を呼び出す。
     this.starsWarsWebService.getPeople()
-      .pipe(first(), takeUntil(this.onDestroy$))
+      .pipe(first(), untilDestroyed(this))
       .subscribe({
         next: (people: Person[]) => {
           this.personStore.loadPeople(people);
