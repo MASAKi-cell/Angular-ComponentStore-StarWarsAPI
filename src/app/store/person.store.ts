@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, withLatestFrom } from 'rxjs/operators';
 import { ComponentStore } from '@ngrx/component-store';
 import { Person } from 'src/app/models/person';
 import { state } from '@angular/animations';
@@ -48,7 +48,7 @@ export class PersonStore extends ComponentStore<PersonState> {
   }));
 
   // ID Numberをアップデートする。
-  readonly setEditId: Observable<number | undefined> = this.updater(
+  readonly setEditId = this.updater(
     (state, editId: number | undefined) => ({
       ...state,
       editId,
@@ -56,11 +56,30 @@ export class PersonStore extends ComponentStore<PersonState> {
   );
 
   // 編集済みPerson情報をアップデートする。
-  readonly setEditedPerson: Observable<Person | undefined> = this.updater(
+  readonly setEditedPerson = this.updater(
     (state, editedPerson: Person | undefined) => ({
       ...state,
       editedPerson,
     })
+  );
+
+  // 副作用の処理
+  readonly editPerson = this.effect(
+    (personId$: Observable<number | undefined>) =>
+      personId$.pipe(
+        withLatestFrom(this.people$),
+        tap<[number | undefined, Person[]]>(([id, people]) => {
+          this.setEditId(id);
+
+          // 編集するID情報を格納する。
+          const personToEdit: Person | undefined =
+            !id && id !== 0
+              ? undefined
+              : people.find((person) => person.id === id);
+
+          this.setEditedPerson({ ...personToEdit as any });
+        })
+      )
   );
 
 }
