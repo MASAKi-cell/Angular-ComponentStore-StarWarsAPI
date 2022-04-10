@@ -20,9 +20,6 @@ export class personListComponent implements OnInit, OnDestroy {
   // Storeから現在のPerson情報を取得して、Viewに表示させる。
   people$ = this.personStore.people$;
 
-  // 変更したPerson情報を取得する。
-  editedPerson$ = this.personStore.editedPerson$;
-
   // Person情報をStoreから呼び出しViewにに表示する。
   displayedColumns = [
     'name',

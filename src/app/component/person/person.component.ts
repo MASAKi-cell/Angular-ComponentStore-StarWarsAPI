@@ -15,6 +15,9 @@ import { Person } from 'src/app/models/person';
 })
 export class PersonComponent implements OnInit, OnDestroy {
   protected readonly onDestroy$ = new EventEmitter();
+  
+  // 変更したPerson情報を取得する。
+  editedPerson$ = this.personStore.editedPerson$;
 
   constructor(
     private personStore: PersonStore,
