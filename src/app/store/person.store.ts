@@ -25,15 +25,17 @@ export class PersonStore extends ComponentStore<PersonState> {
   }
 
   // 現在のPersonの値をStoreから取得する。
-  readonly people$: Observable<Person[]> = this.select(({ people }) => people);
+  readonly people$: Observable<Person[]> = this.select(
+    ({ people }) => people
+    );
 
-  // ID NumberをStoreから取得する。
+  // 変更するID情報をStoreから取得する。
   readonly editId$: Observable<number | undefined> = this.select(
     ({ editId }) => editId
   );
 
   // 編集済みPerson情報をStoreから取得する。かつ値のログを表示する。
-  readonly editedPerson: Observable<Person | undefined> = this.select(
+  readonly editedPerson$: Observable<Person | undefined> = this.select(
     ({ editedPerson }) => editedPerson
   ).pipe(
     tap((Person) => {
@@ -47,7 +49,7 @@ export class PersonStore extends ComponentStore<PersonState> {
     people: people || [],
   }));
 
-  // ID Numberをアップデートする。
+  // ID情報をアップデートする。
   readonly setEditId = this.updater(
     (state, editId: number | undefined) => ({
       ...state,
@@ -55,7 +57,7 @@ export class PersonStore extends ComponentStore<PersonState> {
     })
   );
 
-  // 編集済みPerson情報をアップデートする。
+  // 編集するPerson情報をアップデートする。
   readonly setEditedPerson = this.updater(
     (state, editedPerson: Person | undefined) => ({
       ...state,
@@ -67,11 +69,14 @@ export class PersonStore extends ComponentStore<PersonState> {
   readonly editPerson = this.effect(
     (personId$: Observable<number | undefined>) =>
       personId$.pipe(
+
+        // Observableを取得する。
         withLatestFrom(this.people$),
         tap<[number | undefined, Person[]]>(([id, people]) => {
           this.setEditId(id);
 
           // 編集するID情報を格納する。
+          // ID情報がなければundefinedを格納、そうでなければデータからID情報を取得する。
           const personToEdit: Person | undefined =
             !id && id !== 0
               ? undefined
