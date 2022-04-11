@@ -4,8 +4,8 @@ import { PersonStore } from '../../store/person.store';
 
 @Component({
   selector: 'component-store-edit-person',
-  templateUrl: './person-edit.compoent.html',
-  styleUrls: ['./person-edit.compoent.scss'],
+  templateUrl: './person-edit.component.html',
+  styleUrls: ['./person-edit.component.scss'],
 })
 export class EditPersonComponent {
   @Input() person: Person | undefined;
