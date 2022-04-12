@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Person } from '../../models/person';
-import { PersonStore } from '../../store/person.store';
+import { Person } from 'src/app/models/person';
+import { PersonStore } from 'src/app/store/person.store';
 
 @Component({
   selector: 'component-store-edit-person',
@@ -8,8 +8,19 @@ import { PersonStore } from '../../store/person.store';
   styleUrls: ['./person-edit.component.scss'],
 })
 export class EditPersonComponent {
-  @Input() person: Person | undefined;
+  @Input() person!: Person;
 
-  constructor() {}
+  constructor(
+    private personStore: PersonStore,
+  ) {}
+
+  /**
+   * 変更するPerson情報をStoreに渡して変更分を確定させる。
+   * @returns 
+   */
+  personEdited(): void{
+    this.personStore.setEditedPerson(this.person);
+    return;
+  }
 
 }
