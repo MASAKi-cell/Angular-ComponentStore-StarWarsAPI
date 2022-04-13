@@ -8,4 +8,10 @@ import { PersonStore } from '../../store/person.store';
 })
 export class SavePersonComponent {
 
+  constructor(
+    private personStore: PersonStore,
+  ){}
+
+  
+
 }

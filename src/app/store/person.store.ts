@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 import { tap, withLatestFrom } from 'rxjs/operators';
 import { ComponentStore } from '@ngrx/component-store';
 import { Person } from 'src/app/models/person';
-import { state } from '@angular/animations';
 
 export interface PersonState {
   people: Person[];
@@ -65,18 +64,19 @@ export class PersonStore extends ComponentStore<PersonState> {
     })
   );
 
-  // 副作用の処理
+  // 編集予定のID情報を取得して、既存のPerson情報のIDと一致すれば、
+  // そのPerson情報の編集内容を保存する。
   readonly editPerson = this.effect(
     (personId$: Observable<number | undefined>) =>
       personId$.pipe(
 
-        // Observableを取得する。
+        // Observableを結合する。
         withLatestFrom(this.people$),
         tap<[number | undefined, Person[]]>(([id, people]) => {
           this.setEditId(id);
 
-          // 編集するID情報を格納する。
-          // ID情報がなければundefinedを格納、そうでなければデータからID情報を取得する。
+          // 編集予定のID情報を格納する。
+          // ID情報がなければundefinedを格納、そうでなければPerson情報から該当のID情報を取得する。
           const personToEdit: Person | undefined =
             !id && id !== 0
               ? undefined

@@ -46,6 +46,7 @@ export class personListComponent implements OnInit, OnDestroy {
    */
   editPerson(id: number): void {
     this.personStore.editPerson(id);
+    return;
   }
 
 }
