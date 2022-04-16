@@ -36,10 +36,25 @@ export class PersonStore
       )
     );
 
-    this.sub.add;
+    // Person情報をアップデートする。
+    this.sub.add(
+      saveData$.subscribe({
+        next: (person) => {
+          // Person情報をアップデートする。
+          this.editPerson(person);
+
+          // 編集済みのPerson情報を空にする。
+          this.clearEditedPerson();
+        },
+        // エラーが発生した場合、ログに表示する。
+        error: (error) => {
+          console.log(error);
+        },
+      })
+    );
   }
 
-  // unsubscribe()の処理を実装
+  // unsubscribe()の処理を実装する。
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
@@ -102,4 +117,21 @@ export class PersonStore
         })
       )
   );
+
+  /**
+   * 編集予定のPerson情報をキャンセルする。
+   * @returns {*}
+   */
+  cancelEditPerson(): any {
+    this.clearEditedPerson();
+  }
+
+  /**
+   * 更新情報を空にする。
+   * @returns {*}
+   */
+  private clearEditedPerson(): any {
+    this.setEditId(undefined);
+    this.setEditedPerson(undefined);
+  }
 }
