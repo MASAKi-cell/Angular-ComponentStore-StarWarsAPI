@@ -122,8 +122,16 @@ export class PersonStore
    * 編集予定のPerson情報をキャンセルする。
    * @returns {*}
    */
-  cancelEditPerson(): any {
+  public cancelEditPerson(): any {
     this.clearEditedPerson();
+  }
+
+  /**
+   * Person情報を保存する。
+   * @returns {*}
+   */
+  public saveEditPerson(): any {
+    this.saveEditPerson$.next();
   }
 
   /**
