@@ -14,7 +14,7 @@ export class StarsWarsWebService {
 
   /**
    * Person情報をStarWarsAPIから取得する。
-   * @returns Person[]
+   * @returns {Person[]}
    */
   getPeople(): Observable<Person[]> {
     return this.http.get<Response>(`${environment.API_ROOT}/people`).pipe(
@@ -24,10 +24,19 @@ export class StarsWarsWebService {
   }
 
   /**
+   * Person情報を保存する。
+   * @param {number} id
+   * @param {Person} person
+   * @returns {Person}
+   */
+  savePerson(id: number, person: Person): Observable<Person> {
+    return of(person);
+  }
+
+  /**
    * エラーハンドリング（失敗したHTTP操作を処理する。）
-   * @param operation
-   * @param result
-   * @returns
+   * @param {string} operation
+   * @param {T} result
    */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

@@ -14,7 +14,7 @@ export class EditPersonComponent {
 
   /**
    * 変更するPerson情報をStoreに渡して変更分を確定させる。
-   * @returns
+   * @returns {void}
    */
   personEdited(): void {
     this.personStore.setEditedPerson(this.person);

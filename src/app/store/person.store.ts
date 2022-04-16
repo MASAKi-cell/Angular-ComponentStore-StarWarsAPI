@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { tap, withLatestFrom } from 'rxjs/operators';
 import { ComponentStore } from '@ngrx/component-store';
 import { Person } from 'src/app/models/person';
@@ -19,6 +19,8 @@ const defaultState: PersonState = {
 
 @Injectable()
 export class PersonStore extends ComponentStore<PersonState> {
+  private saveEditPerson$ = new Subject<void>();
+  private sub = new Subscription();
   constructor() {
     super(defaultState);
   }
