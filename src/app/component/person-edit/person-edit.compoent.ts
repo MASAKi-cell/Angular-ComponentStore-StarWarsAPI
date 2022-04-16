@@ -10,17 +10,14 @@ import { PersonStore } from 'src/app/store/person.store';
 export class EditPersonComponent {
   @Input() person!: Person;
 
-  constructor(
-    private personStore: PersonStore,
-  ) {}
+  constructor(private personStore: PersonStore) {}
 
   /**
    * 変更するPerson情報をStoreに渡して変更分を確定させる。
-   * @returns 
+   * @returns
    */
-  personEdited(): void{
+  personEdited(): void {
     this.personStore.setEditedPerson(this.person);
     return;
   }
-
 }

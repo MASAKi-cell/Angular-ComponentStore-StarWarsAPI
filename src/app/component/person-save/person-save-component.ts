@@ -7,11 +7,5 @@ import { PersonStore } from '../../store/person.store';
   styleUrls: ['./person-save-component.scss'],
 })
 export class SavePersonComponent {
-
-  constructor(
-    private personStore: PersonStore,
-  ){}
-
-  
-
+  constructor(private personStore: PersonStore) {}
 }

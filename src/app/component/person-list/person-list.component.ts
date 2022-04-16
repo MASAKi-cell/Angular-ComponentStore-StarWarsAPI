@@ -14,7 +14,6 @@ import { PersonStore } from 'src/app/store/person.store';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class personListComponent implements OnInit, OnDestroy {
-  
   protected readonly onDestroy$ = new EventEmitter();
 
   // Storeから現在のPerson情報を取得して、Viewに表示させる。
@@ -37,16 +36,14 @@ export class personListComponent implements OnInit, OnDestroy {
     this.onDestroy$.emit();
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   /**
    * id情報から特定のPerson情報を取得して変更する。
-   * @param id 
+   * @param id
    */
   editPerson(id: number): void {
     this.personStore.editPerson(id);
     return;
   }
-
 }

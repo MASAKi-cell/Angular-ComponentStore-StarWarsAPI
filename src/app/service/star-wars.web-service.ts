@@ -10,7 +10,6 @@ import { Person } from '../models/person';
   providedIn: 'root',
 })
 export class StarsWarsWebService {
-
   constructor(private http: HttpClient) {}
 
   /**
@@ -21,24 +20,22 @@ export class StarsWarsWebService {
     return this.http.get<Response>(`${environment.API_ROOT}/people`).pipe(
       map((response) => response.results),
       catchError(this.handleError<Person[]>(`getPerson`, []))
-    )
+    );
   }
 
   /**
    * エラーハンドリング（失敗したHTTP操作を処理する。）
-   * @param operation 
-   * @param result 
-   * @returns 
+   * @param operation
+   * @param result
+   * @returns
    */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-
       // consoleに出力
       console.error(error);
-  
+
       // 空の結果を返して、アプリを持続可能にする
       return of(result as T);
-    }
+    };
   }
-
 }

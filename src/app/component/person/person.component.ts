@@ -5,7 +5,6 @@ import { StarsWarsWebService } from 'src/app/service/star-wars.web-service';
 import { PersonStore } from 'src/app/store/person.store';
 import { Person } from 'src/app/models/person';
 
-
 @UntilDestroy()
 @Component({
   selector: 'component-store-person',
@@ -15,7 +14,7 @@ import { Person } from 'src/app/models/person';
 })
 export class PersonComponent implements OnInit, OnDestroy {
   protected readonly onDestroy$ = new EventEmitter();
-  
+
   // 変更したPerson情報を取得する。
   editedPerson$ = this.personStore.editedPerson$;
 
@@ -29,9 +28,9 @@ export class PersonComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    
     // serviceを使用して、StoreからPerson情報を呼び出す。
-    this.starsWarsWebService.getPeople()
+    this.starsWarsWebService
+      .getPeople()
       .pipe(first(), untilDestroyed(this))
       .subscribe({
         next: (people: Person[]) => {
