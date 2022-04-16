@@ -27,9 +27,9 @@ export class StarsWarsWebService {
    * Person情報を保存する。
    * @param {number} id
    * @param {Person} person
-   * @returns {Person}
+   * @returns {*} Person
    */
-  savePerson(id: number, person: Person): Observable<Person> {
+  savePerson(person?: Person, id?: number): Observable<any> {
     return of(person);
   }
 

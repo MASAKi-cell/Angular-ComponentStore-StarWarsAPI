@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { tap, withLatestFrom } from 'rxjs/operators';
+import { switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { ComponentStore } from '@ngrx/component-store';
+import { StarsWarsWebService } from 'src/app/service/star-wars.web-service';
 import { Person } from 'src/app/models/person';
 
 export interface PersonState {
@@ -18,11 +19,29 @@ const defaultState: PersonState = {
 };
 
 @Injectable()
-export class PersonStore extends ComponentStore<PersonState> {
+export class PersonStore
+  extends ComponentStore<PersonState>
+  implements OnDestroy
+{
   private saveEditPerson$ = new Subject<void>();
-  private sub = new Subscription();
-  constructor() {
+  private sub: Subscription = new Subscription();
+  constructor(private starsWarsWebService: StarsWarsWebService) {
     super(defaultState);
+
+    // Person情報を保存する処理を格納する。
+    const saveData$ = this.saveEditPerson$.pipe(
+      withLatestFrom(this.editedPerson$, this.editId$),
+      switchMap(([, person, editId]) =>
+        this.starsWarsWebService.savePerson(person, editId)
+      )
+    );
+
+    this.sub.add;
+  }
+
+  // unsubscribe()の処理を実装
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   // 現在のPersonの値をStoreから取得する。
