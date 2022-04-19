@@ -28,6 +28,7 @@ export class personListComponent implements OnInit, OnDestroy {
     'hair_color',
     'height',
     'mass',
+    'controls',
   ];
 
   constructor(private personStore: PersonStore) {}
