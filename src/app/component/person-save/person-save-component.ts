@@ -9,10 +9,18 @@ import { PersonStore } from '../../store/person.store';
 export class SavePersonComponent {
   constructor(private personStore: PersonStore) {}
 
+  /**
+   * 編集内容をキャンセルする。
+   * @returns {void}
+   */
   cancelPerson(): void {
     this.personStore.cancelEditPerson();
   }
 
+  /**
+   * 編集内容を保存する。
+   * @returns {void}
+   */
   savePerson(): void {
     this.personStore.saveEditPerson();
   }

@@ -46,7 +46,7 @@ export class PersonStore
           // 編集済みのPerson情報を空にする。
           this.clearEditedPerson();
         },
-        // エラーが発生した場合、ログに表示する。
+        // エラーが発生した場合は、ログに表示する。
         error: (error) => {
           console.log(error);
         },
