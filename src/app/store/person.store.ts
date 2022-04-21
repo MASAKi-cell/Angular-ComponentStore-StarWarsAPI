@@ -28,7 +28,7 @@ export class PersonStore
   constructor(private starsWarsWebService: StarsWarsWebService) {
     super(defaultState);
 
-    // Person情報を保存する処理を格納する。
+    // 編集済みPerson情報とid情報をまとめて保存する。
     const saveData$ = this.saveEditPerson$.pipe(
       withLatestFrom(this.editedPerson$, this.editId$),
       switchMap(([, person, editId]) =>
@@ -72,7 +72,7 @@ export class PersonStore
     ({ editedPerson }) => editedPerson
   ).pipe(
     tap((Person) => {
-      console.log('editedPerson', Person);
+      console.log('editedPerson:', Person);
     })
   );
 
@@ -88,7 +88,7 @@ export class PersonStore
     editId,
   }));
 
-  // 編集するPerson情報をアップデートする。
+  // 編集するerson情報をアップデートする。
   readonly setEditedPerson = this.updater(
     (state, editedPerson: Person | undefined) => ({
       ...state,
