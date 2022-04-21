@@ -7,5 +7,5 @@ import { Person } from '../../models/person';
   styleUrls: ['./person-edit-display.component.scss'],
 })
 export class EditDisplayComponent {
-  @Input() person: Person | undefined;
+  @Input() person?: Person;
 }

@@ -8,7 +8,7 @@ import { PersonStore } from 'src/app/store/person.store';
   styleUrls: ['./person-edit.component.scss'],
 })
 export class EditPersonComponent {
-  @Input() person!: Person;
+  @Input() person?: Person;
 
   constructor(private personStore: PersonStore) {}
 
