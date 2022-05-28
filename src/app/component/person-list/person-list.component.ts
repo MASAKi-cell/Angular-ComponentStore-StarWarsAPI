@@ -33,11 +33,11 @@ export class personListComponent implements OnInit, OnDestroy {
 
   constructor(private personStore: PersonStore) {}
 
+  ngOnInit(): void {}
+
   ngOnDestroy(): void {
     this.onDestroy$.emit();
   }
-
-  ngOnInit(): void {}
 
   /**
    * id情報から特定のPerson情報を取得して変更する。
