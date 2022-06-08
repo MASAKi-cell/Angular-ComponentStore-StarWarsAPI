@@ -11,7 +11,7 @@ export interface PersonState {
   editedPerson?: Person;
 }
 
-// Storeの初期値を設定する。
+// Storeの初期値を設定
 const defaultState: PersonState = {
   people: [],
   editId: undefined,
@@ -28,7 +28,7 @@ export class PersonStore
   constructor(private starsWarsWebService: StarsWarsWebService) {
     super(defaultState);
 
-    // 編集済みPerson情報とid情報をまとめて保存する。
+    // 編集済みPerson情報とid情報を保存
     const saveData$ = this.saveEditPerson$.pipe(
       withLatestFrom(this.editedPerson$, this.editId$),
       switchMap(([, person, editId]) =>
@@ -36,38 +36,37 @@ export class PersonStore
       )
     );
 
-    // Person情報をアップデートする。
+    // Person情報をアップデート
     this.sub.add(
       saveData$.subscribe({
         next: (person) => {
-          // Person情報をアップデートする。
+          // Person情報をアップデート
           this.editPerson(person);
 
-          // 編集済みのPerson情報を空にする。
+          // 編集済みのPerson情報を空に設定
           this.clearEditedPerson();
         },
-        // エラーが発生した場合は、ログに表示する。
+        // ログに表示
         error: (error) => {
-          console.log(error);
+          console.log(`Error:`, error);
         },
       })
     );
   }
 
-  // unsubscribe()の処理を実装する。
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
 
-  // 現在のPersonの値をStoreから取得する。
+  // 現在のPersonの値をStoreから取得
   readonly people$: Observable<Person[]> = this.select(({ people }) => people);
 
-  // 変更するID情報をStoreから取得する。
+  // 変更するID情報をStoreから取得
   readonly editId$: Observable<number | undefined> = this.select(
     ({ editId }) => editId
   );
 
-  // 編集済みPerson情報をStoreから取得する。かつ値のログを表示する。
+  // 編集済みPerson情報をStoreから取得、ログの表示
   readonly editedPerson$: Observable<Person | undefined> = this.select(
     ({ editedPerson }) => editedPerson
   ).pipe(
@@ -76,19 +75,19 @@ export class PersonStore
     })
   );
 
-  // Personの値をアップデートする。
+  // Personの値をアップデート
   readonly loadPeople = this.updater((state, people: Person[] | null) => ({
     ...state,
     people: people || [],
   }));
 
-  // ID情報をアップデートする。
+  // ID情報をアップデート
   readonly setEditId = this.updater((state, editId: number | undefined) => ({
     ...state,
     editId,
   }));
 
-  // 編集するerson情報をアップデートする。
+  // 編集するperson情報をアップデート
   readonly setEditedPerson = this.updater(
     (state, editedPerson: Person | undefined) => ({
       ...state,
@@ -96,18 +95,14 @@ export class PersonStore
     })
   );
 
-  // 編集予定のID情報を取得して、既存のPerson情報のIDと一致すれば、
-  // そのPerson情報の編集内容を保存する。
+  // 既存のPerson情報のIDと一致すれば、Person情報の編集内容を保存
   readonly editPerson = this.effect(
     (personId$: Observable<number | undefined>) =>
       personId$.pipe(
-        // Observableを結合する。
         withLatestFrom(this.people$),
         tap<[number | undefined, Person[]]>(([id, people]) => {
           this.setEditId(id);
 
-          // 編集予定のID情報を格納する。
-          // ID情報がなければundefinedを格納、そうでなければPerson情報から該当のID情報を取得する。
           const personToEdit: Person | undefined =
             !id && id !== 0
               ? undefined
@@ -119,7 +114,7 @@ export class PersonStore
   );
 
   /**
-   * 編集予定のPerson情報をキャンセルする。
+   * 編集予定のPerson情報をキャンセル
    * @returns {*}
    */
   public cancelEditPerson(): any {
@@ -127,7 +122,7 @@ export class PersonStore
   }
 
   /**
-   * Person情報を保存する。
+   * Person情報を保存
    * @returns {*}
    */
   public saveEditPerson(): any {
@@ -135,7 +130,7 @@ export class PersonStore
   }
 
   /**
-   * 更新情報を空にする。
+   * 更新情報を空にする
    * @returns {*}
    */
   private clearEditedPerson(): any {
