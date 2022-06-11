@@ -5,6 +5,7 @@ import { ComponentStore } from '@ngrx/component-store';
 import { StarsWarsWebService } from 'src/app/service/star-wars.web-service';
 import { PersonState } from '../models/person-state';
 import { Person } from 'src/app/voes/person';
+import { StorageUtil } from 'src/app/util/storage.util';
 
 @Injectable()
 export class PersonStore
