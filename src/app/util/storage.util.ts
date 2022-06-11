@@ -4,11 +4,7 @@ export class StorageUtil {
   }
 
   static getItem<T>(key: string): T {
-    try {
-      return JSON.parse(sessionStorage.getItem(key)) as T;
-    } catch (e) {
-      return null;
-    }
+    return JSON.parse(sessionStorage.getItem(key) as string) as T;
   }
 
   static removeItem(key: string): void {
