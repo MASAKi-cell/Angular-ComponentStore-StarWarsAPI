@@ -1,10 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Response } from '../models/response';
-import { Person } from '../models/person';
+import { Response } from '../voes/response';
+import { Person } from '../voes/person';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +23,7 @@ export class StarsWarsWebService {
       map((response) => {
         for (const person of response.results) {
           if (!person.id) {
+            // id情報の追加
             const PersonDate = {
               id: id,
               name: person.name,

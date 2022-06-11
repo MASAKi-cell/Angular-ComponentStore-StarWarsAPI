@@ -3,7 +3,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { first } from 'rxjs/operators';
 import { StarsWarsWebService } from 'src/app/service/star-wars.web-service';
 import { PersonStore } from 'src/app/store/person.store';
-import { Person } from 'src/app/models/person';
+import { Person } from 'src/app/voes/person';
 
 @UntilDestroy()
 @Component({

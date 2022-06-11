@@ -3,30 +3,26 @@ import { Observable, Subject, Subscription } from 'rxjs';
 import { switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { ComponentStore } from '@ngrx/component-store';
 import { StarsWarsWebService } from 'src/app/service/star-wars.web-service';
-import { Person } from 'src/app/models/person';
-
-export interface PersonState {
-  people: Person[];
-  editId?: number;
-  editedPerson?: Person;
-}
-
-// Storeの初期値を設定
-const defaultState: PersonState = {
-  people: [],
-  editId: undefined,
-  editedPerson: undefined,
-};
+import { PersonState } from '../models/person-state';
+import { Person } from 'src/app/voes/person';
 
 @Injectable()
 export class PersonStore
   extends ComponentStore<PersonState>
   implements OnDestroy
 {
+  private static SESSION_STORAGE_KEY = 'starWars.state';
+
   private saveEditPerson$ = new Subject<void>();
   private sub: Subscription = new Subscription();
   constructor(private starsWarsWebService: StarsWarsWebService) {
-    super(defaultState);
+    super(
+      StorageUtil.getItem(PersonStore.SESSION_STORAGE_KEY) || {
+        people: [],
+        editId: undefined,
+        editedPerson: undefined,
+      }
+    );
 
     // 編集済みPerson情報とid情報を保存
     const saveData$ = this.saveEditPerson$.pipe(
@@ -115,7 +111,7 @@ export class PersonStore
    * @returns {*}
    */
   public cancelEditPerson(): any {
-    this.clearEditId();
+    this.clearEditedPerson();
   }
 
   /**
@@ -136,7 +132,7 @@ export class PersonStore
   }
 
   /**
-   * 更新情報をクリアに設定
+   * データを削除
    */
   private readonly clearEditId = this.updater((state) => {
     return {} as PersonState;
