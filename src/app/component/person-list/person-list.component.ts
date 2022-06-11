@@ -16,7 +16,7 @@ import { PersonStore } from 'src/app/store/person.store';
 export class personListComponent implements OnInit, OnDestroy {
   protected readonly onDestroy$ = new EventEmitter();
 
-  // Storeから現在のPerson情報を取得して、画面表示
+  // Storeから現在のPerson情報を取得
   people$ = this.personStore.people$;
 
   displayedColumns = [

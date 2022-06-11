@@ -58,7 +58,9 @@ export class PersonStore
   }
 
   // 現在のPersonの値をStoreから取得
-  readonly people$: Observable<Person[]> = this.select(({ people }) => people);
+  readonly people$: Observable<Person[]> = this.select(
+    ({ people }) => people
+  ).pipe(tap(console.log));
 
   // 変更するID情報をStoreから取得
   readonly editId$: Observable<number | undefined> = this.select(

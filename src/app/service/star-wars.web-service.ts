@@ -17,8 +17,29 @@ export class StarsWarsWebService {
    * @returns {Person[]}
    */
   getPeople(): Observable<Person[]> {
+    let id: number = 1;
+    let persons: Person[] = [];
     return this.http.get<Response>(`${environment.API_ROOT}/people`).pipe(
-      map((response) => response.results),
+      map((response) => {
+        for (const person of response.results) {
+          if (!person.id) {
+            const PersonDate = {
+              id: id,
+              name: person.name,
+              birth_year: person.birth_year,
+              eye_color: person.eye_color,
+              gender: person.gender,
+              hair_color: person.hair_color,
+              height: person.height,
+              mass: person.mass,
+              skin_color: person.skin_color,
+            };
+            persons.push(PersonDate);
+          }
+          id++;
+        }
+        return persons;
+      }),
       catchError(this.handleError<Person[]>(`getPerson`, []))
     );
   }
