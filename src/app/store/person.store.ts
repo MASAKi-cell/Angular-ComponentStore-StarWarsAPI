@@ -44,11 +44,10 @@ export class PersonStore
           this.editPerson(person);
 
           // 編集済みのPerson情報を空に設定
-          this.clearEditedPerson();
+          this.clearEditId();
         },
-        // ログに表示
         error: (error) => {
-          console.log(`Error:`, error);
+          console.error(error);
         },
       })
     );
@@ -66,13 +65,9 @@ export class PersonStore
     ({ editId }) => editId
   );
 
-  // 編集済みPerson情報をStoreから取得、ログの表示
+  // 編集済みPerson情報をStoreから取得
   readonly editedPerson$: Observable<Person | undefined> = this.select(
     ({ editedPerson }) => editedPerson
-  ).pipe(
-    tap((Person) => {
-      console.log('editedPerson:', Person);
-    })
   );
 
   // Personの値をアップデート
@@ -118,7 +113,7 @@ export class PersonStore
    * @returns {*}
    */
   public cancelEditPerson(): any {
-    this.clearEditedPerson();
+    this.clearEditId();
   }
 
   /**
@@ -137,4 +132,11 @@ export class PersonStore
     this.setEditId(undefined);
     this.setEditedPerson(undefined);
   }
+
+  /**
+   * 更新情報をクリアに設定
+   */
+  private readonly clearEditId = this.updater((state) => {
+    return {} as PersonState;
+  });
 }

@@ -16,10 +16,9 @@ import { PersonStore } from 'src/app/store/person.store';
 export class personListComponent implements OnInit, OnDestroy {
   protected readonly onDestroy$ = new EventEmitter();
 
-  // Storeから現在のPerson情報を取得して、Viewに表示させる。
+  // Storeから現在のPerson情報を取得して、画面表示
   people$ = this.personStore.people$;
 
-  // Person情報をStoreから呼び出しViewにに表示する。
   displayedColumns = [
     'name',
     'birth_year',
@@ -40,8 +39,8 @@ export class personListComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * id情報から特定のPerson情報を取得して変更する。
-   * @param id
+   * Person情報を変更
+   * @param {id}
    */
   editPerson(id: number): void {
     this.personStore.editPerson(id);
