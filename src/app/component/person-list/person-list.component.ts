@@ -39,7 +39,7 @@ export class personListComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Person情報を変更
+   * 編集するのPerson情報を取得
    * @param {id}
    */
   editPerson(id: number): void {

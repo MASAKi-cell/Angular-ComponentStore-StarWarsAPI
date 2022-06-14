@@ -28,7 +28,7 @@ export class PersonComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // serviceを使用して、StoreからPerson情報を呼び出しアップデートさせる。
+    // serviceを使用して、StoreからPerson情報を呼び出しアップデートさせる.
     this.starsWarsWebService
       .getPeople()
       .pipe(first(), untilDestroyed(this))

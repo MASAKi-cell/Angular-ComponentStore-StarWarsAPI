@@ -133,9 +133,10 @@ export class PersonStore
   }
 
   /**
-   * データを削除
+   * 全データ、Sessionを削除
    */
   private readonly clearEditId = this.updater((state) => {
+    StorageUtil.removeItem(PersonStore.SESSION_STORAGE_KEY);
     return {} as PersonState;
   });
 }
