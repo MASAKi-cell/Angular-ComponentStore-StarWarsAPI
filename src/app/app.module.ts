@@ -13,7 +13,6 @@ import { AppComponent } from './app.component';
 import { PersonComponent } from 'src/app/component/person/person.component';
 import { personListComponent } from 'src/app/component/person-list/person-list.component';
 import { EditPersonComponent } from 'src/app/component/person-edit/person-edit.compoent';
-import { SavePersonComponent } from 'src/app/component/person-save/person-save-component';
 
 @NgModule({
   declarations: [
@@ -21,7 +20,6 @@ import { SavePersonComponent } from 'src/app/component/person-save/person-save-c
     PersonComponent,
     personListComponent,
     EditPersonComponent,
-    SavePersonComponent,
   ],
   imports: [
     BrowserModule,
