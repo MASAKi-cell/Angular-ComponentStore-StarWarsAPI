@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Person } from 'src/app/voes/person';
 import { PersonStore } from 'src/app/store/person.store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'component-store-edit-person',
@@ -12,6 +13,11 @@ export class EditPersonComponent {
 
   constructor(private personStore: PersonStore) {}
 
+  ngOnInit() {}
+  get editedPereson$(): Observable<Person | undefined> {
+    return this.personStore.editedPerson$;
+  }
+
   /**
    * 変更するPerson情報をStoreに渡して変更分を確定させる。
    * @returns {void}
@@ -19,5 +25,21 @@ export class EditPersonComponent {
   personEdited(): void {
     this.personStore.setEditedPerson(this.person);
     return;
+  }
+
+  /**
+   * 編集内容をキャンセルする。
+   * @returns {void}
+   */
+  cancelPerson(): void {
+    this.personStore.cancelEditPerson();
+  }
+
+  /**
+   * 編集内容を保存する。
+   * @returns {void}
+   */
+  savePerson(): void {
+    this.personStore.saveEditPerson();
   }
 }

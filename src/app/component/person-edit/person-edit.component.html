@@ -1,3 +1,4 @@
+<h1>Editing {{editedPereson$ | async}}</h1>
 <div class="container mat-elevation-z8">
     <mat-form-field class="full-width">
       <mat-label>Name</mat-label>
@@ -13,3 +14,9 @@
       <input matInput placeholder="How they identify" [(ngModel)]="person!.gender" (ngModelChange)="personEdited()">
     </mat-form-field>
   </div>
+  <button mat-icon-button color="primary" (click)="savePerson()">
+    <mat-icon>save</mat-icon>
+  </button>
+  <button mat-icon-button color="warn" (click)="cancelPerson()">
+    <mat-icon>cancel</mat-icon>
+  </button>
