@@ -28,7 +28,7 @@ export class EditPersonComponent {
   }
 
   /**
-   * 編集内容をキャンセルする。
+   * 編集内容をキャンセル
    * @returns {void}
    */
   cancelPerson(): void {
@@ -36,7 +36,7 @@ export class EditPersonComponent {
   }
 
   /**
-   * 編集内容を保存する。
+   * 編集内容を保存
    * @returns {void}
    */
   savePerson(): void {
