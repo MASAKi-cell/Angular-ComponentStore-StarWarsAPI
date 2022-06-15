@@ -14,8 +14,8 @@ export class EditPersonComponent {
   constructor(private personStore: PersonStore) {}
 
   ngOnInit() {}
-  get editedPereson$(): Observable<Person | undefined> {
-    return this.personStore.editedPerson$;
+  get editId$(): Observable<number | undefined> {
+    return this.personStore.editId$;
   }
 
   /**
