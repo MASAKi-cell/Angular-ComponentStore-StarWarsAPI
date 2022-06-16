@@ -41,7 +41,7 @@ export class PersonStore
           this.editPerson(person);
 
           // 編集済みのPerson情報を空に設定
-          this.clearEditId();
+          this.clearEditedPerson();
         },
         error: (error) => {
           console.error(error);
@@ -70,24 +70,44 @@ export class PersonStore
   );
 
   // Personの値をアップデート
-  readonly loadPeople = this.updater((state, people: Person[] | null) => ({
-    ...state,
-    people: people || [],
-  }));
+  readonly loadPeople = this.updater((state, people: Person[] | null) => {
+    state = {
+      ...state,
+      people: people || [],
+    };
+    StorageUtil.setItem(PersonStore.SESSION_STORAGE_KEY, state);
+    return state;
+  });
 
   // ID情報をアップデート
-  readonly setEditId = this.updater((state, editId: number | undefined) => ({
-    ...state,
-    editId,
-  }));
+  readonly setEditId = this.updater((state, editId: number | undefined) => {
+    state = {
+      ...state,
+      editId,
+    };
+    StorageUtil.setItem(PersonStore.SESSION_STORAGE_KEY, state);
+    return state;
+  });
 
   // 編集するperson情報をアップデート
   readonly setEditedPerson = this.updater(
-    (state, editedPerson: Person | undefined) => ({
-      ...state,
-      editedPerson,
-    })
+    (state, editedPerson: Person | undefined) => {
+      state = {
+        ...state,
+        editedPerson,
+      };
+      StorageUtil.setItem(PersonStore.SESSION_STORAGE_KEY, state);
+      return state;
+    }
   );
+
+  /**
+   * 全データ、Sessionを削除
+   */
+  private readonly clearEditId = this.updater((state) => {
+    StorageUtil.removeItem(PersonStore.SESSION_STORAGE_KEY);
+    return {} as PersonState;
+  });
 
   // 既存のPerson情報のIDと一致すれば、Person情報の編集内容を保存
   readonly editPerson = this.effect(
@@ -124,19 +144,11 @@ export class PersonStore
   }
 
   /**
-   * 更新情報を空にする
+   * 更新情報を空に設定
    * @returns {*}
    */
   private clearEditedPerson(): any {
     this.setEditId(undefined);
     this.setEditedPerson(undefined);
   }
-
-  /**
-   * 全データ、Sessionを削除
-   */
-  private readonly clearEditId = this.updater((state) => {
-    StorageUtil.removeItem(PersonStore.SESSION_STORAGE_KEY);
-    return {} as PersonState;
-  });
 }

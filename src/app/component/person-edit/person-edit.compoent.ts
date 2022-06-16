@@ -14,12 +14,14 @@ export class EditPersonComponent {
   constructor(private personStore: PersonStore) {}
 
   ngOnInit() {}
+
+  // Id情報を取得
   get editId$(): Observable<number | undefined> {
     return this.personStore.editId$;
   }
 
   /**
-   * 変更するPerson情報をStoreに渡して変更分を確定させる。
+   * 変更するPerson情報をStoreに渡して変更分を確定。
    * @returns {void}
    */
   personEdited(): void {
